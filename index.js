@@ -1,10 +1,62 @@
-const express = require('express');
+const express = require('express'),
+  morgan = require('morgan');
+
 const app = express();
-const http = require('http');
 
-http.createServer((request, response) => {
-  response.writeHead(200, {'Content-Type': 'text/plain'});
-  response.end('Welcome to my book club!\n');
-}).listen(8080);
+app.use(morgan('common'));
+app.use(express.static('public'));
+app.use((err, req, res, next) => {
+  console.error(err.stack);
+  res.status(500).send('Something broke!');
+});
 
-console.log('My first Node test server is running on Port 8080.');
+let topMovies = [
+  {
+    title: 'Django Unchained',
+    director: 'Quentin Tarantino'
+  },
+  {
+    title: 'School of Rock',
+    director: 'Richard Linklater'
+  },
+  {
+    title: 'Inception',
+    director: 'Christopher Nolan'
+  },
+  {
+    title: 'Melancholia',
+    director: 'Lars Von Trier'
+  },
+  {
+    title: 'Enemy',
+    director: 'Denis Villeneuve'
+  },
+  {
+    title: 'The Sixth Sense',
+    director: 'M. Night Shyamalan'
+  }
+  {
+    title: 'Edge of Tomorrow',
+    director: 'Doug Liman'
+  },
+  {
+    title: 'X-Men: First Class',
+    director: 'Matthew Vaughn'
+  },
+  {
+    title: 'Thor: Ragnarok',
+    director: 'Taika Waititi'
+  },
+  {
+    title: 'The Departed',
+    director: 'Martin Scorsese'
+  }
+];
+
+app.get('/', (req, res) => {
+  res.send('These are some of my favorite movies!');
+});
+
+app.get('/movies', (req, res) => {
+  res.json(topMovies);
+});
