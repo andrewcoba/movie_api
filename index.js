@@ -34,7 +34,7 @@ let topMovies = [
   {
     title: 'The Sixth Sense',
     director: 'M. Night Shyamalan'
-  }
+  },
   {
     title: 'Edge of Tomorrow',
     director: 'Doug Liman'
@@ -59,6 +59,7 @@ app.get('/', (req, res) => {
 
 app.get('/movies', (req, res) => {
   res.json(topMovies);
+});
 
 app.get('/documentation', (req, res) => {
   res.sendFile('public/documentation.html', {root: __dirname});
