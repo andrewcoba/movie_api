@@ -24,7 +24,10 @@ let movies = [
   {
     title: 'Interstellar',
     year: '2014',
-    genre: 'science fiction drama',
+    genre: {
+      name: 'science fiction drama',
+      description: 'A genre characterized by stories involving conflicts between science and technology, human nature, and social organization in futuristic or fantastical worlds, created in cinema through distinctive iconographies, images, and sounds often produced by means of special effects technology.'
+    },
     director: {
       name: 'Christopher Nolan',
       birth: '1970',
