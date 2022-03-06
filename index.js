@@ -140,7 +140,7 @@ app.delete('/users/:username', (req, res) => {
   }
 })
 
-app.use(express.statc('public'));
+app.use(express.static('public'));
 
 app.use((err, req, res, next) => {
   console.error(err.stack);
