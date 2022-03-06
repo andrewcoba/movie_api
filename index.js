@@ -18,7 +18,7 @@ let users = [
       'Interstellar'
     ]
   }
-];
+]
 
 let movies = [
   {

@@ -33,7 +33,7 @@
       </tr>
       <tr>
         <td>Return data about a single movie by title to the user</td>
-        <td>/movies/:title</td>
+        <td>/movies/[title]</td>
         <td>GET</td>
         <td>:title</td>
         <td>None</td>
@@ -58,9 +58,9 @@
       </tr>
       <tr>
         <td>Return data about a genre (description) by name/title</td>
-        <td>/movies/genre/:name</td>
+        <td>/movies/genres/[name]</td>
         <td>GET</td>
-        <td>:name</td>
+        <td>[name]</td>
         <td>None</td>
         <td>A JSON object with data about the selected genre. Example:
           <pre>
@@ -74,7 +74,7 @@
       </tr>
       <tr>
         <td>Return data about a director (bio, date of birth) by name</td>
-        <td>/movies/director/:name</td>
+        <td>/movies/directors/[name]</td>
         <td>GET</td>
         <td>:name</td>
         <td>none</td>
