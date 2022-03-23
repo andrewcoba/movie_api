@@ -17,10 +17,15 @@ app.use(bodyParser.json());
 app.use(morgan('common'));
 app.use(bodyParser.urlencoded({ extended: true }));
 
+const cors = require('cors');
+app.use(cors());
+
 let auth = require('./auth')(app);
 
 const passport = require('passport');
 require('./passport');
+
+const { check, validationResult } = require('express-validator');
 
 app.get('/', (req, res) => {
   res.send('These are some of my favorite movies!');
@@ -93,7 +98,21 @@ app.get('/users', passport.authenticate('jwt', { session: false }), (req, res) =
 });
 
 //Creates a new user
-app.post('/users', (req, res) => {
+app.post('/users',
+  [
+    check('Username', 'Username is required').isLength({min: 5}),
+    check('Username', 'Username contains non alphanumeric characters - not allowed.').isAlphanumeric(),
+    check('Password', 'Password is required').not().isEmpty(),
+    check('Email', 'Email does not appear to be valid').isEmail()
+  ], (req, res) => {
+
+    let errors = validationResult(req);
+
+    if(!errors.isEmpty()) {
+      return res.status(422).json({ errors: errors.array() });
+    }
+
+  let hashedPassword = Users.hashPassword(req.body.Password);
   Users.findOne({ Username: req.body.Username })
     .then((user) => {
       if (user) {
@@ -102,7 +121,7 @@ app.post('/users', (req, res) => {
         Users
           .create({
             Username: req.body.Username,
-            Password: req.body.Password,
+            Password: hashedPassword,
             Email: req.body.Email,
             Birthday: req.body.Birthday
           })
@@ -192,6 +211,7 @@ app.use((err, req, res, next) => {
   res.status(500).send('Something broke!');
 });
 
-app.listen(8081, () => {
-  console.log('Your app is listening on port 8081');
+const port = process.env.PORT || 8081;
+app.listen(port, '0.0.0.0',() => {
+  console.log('Listening on Port ' + port);
 });
