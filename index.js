@@ -33,8 +33,8 @@ app.get('/', (req, res) => {
   res.send('These are some of my favorite movies!');
 });
 
-//Returns all movies in database in json format
-app.get('/movies', passport.authenticate('jwt', { session: false }), (req, res) => {
+//Returns all movies in database in json format. ->  passport.authenticate('jwt', { session: false }),
+app.get('/movies', function (req, res) {
   Movies.find()
     .then((movies) => {
       res.status(201).json(movies);
@@ -205,6 +205,19 @@ app.delete('/users/:Username', passport.authenticate('jwt', { session: false }),
       res.status(500).send('Error: ' + err);
     });
 });
+
+let allowedOrigins = ['http://localhost:8081', 'https://testsite.com', 'http://localhost:1234'];
+
+app.use(cors({
+  origin: (origin, callback) => {
+    if(!origin) return callback(null, true);
+    if(allowedOrigins.indexOf(origin) === -1){
+      let message = 'The CORS policy for this application doesn\'t allow access from origin ' + origin;
+      return callback(new Error(message ), false);
+    }
+    return callback(null, true);
+  }
+}));
 
 app.use(express.static('public'));
 
