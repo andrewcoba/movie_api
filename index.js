@@ -29,6 +29,19 @@ require('./passport');
 
 const { check, validationResult } = require('express-validator');
 
+let allowedOrigins = ['http://localhost:8081', 'https://testsite.com', 'http://localhost:1234', 'https://infoaboutmovies123.herokuapp.com/'];
+
+app.use(cors({
+  origin: (origin, callback) => {
+    if(!origin) return callback(null, true);
+    if(allowedOrigins.indexOf(origin) === -1){
+      let message = 'The CORS policy for this application doesn\'t allow access from origin ' + origin;
+      return callback(new Error(message ), false);
+    }
+    return callback(null, true);
+  }
+}));
+
 app.get('/', (req, res) => {
   res.send('These are some of my favorite movies!');
 });
@@ -205,19 +218,6 @@ app.delete('/users/:Username', passport.authenticate('jwt', { session: false }),
       res.status(500).send('Error: ' + err);
     });
 });
-
-let allowedOrigins = ['http://localhost:8081', 'https://testsite.com', 'http://localhost:1234', 'https://infoaboutmovies123.herokuapp.com/'];
-
-app.use(cors({
-  origin: (origin, callback) => {
-    if(!origin) return callback(null, true);
-    if(allowedOrigins.indexOf(origin) === -1){
-      let message = 'The CORS policy for this application doesn\'t allow access from origin ' + origin;
-      return callback(new Error(message ), false);
-    }
-    return callback(null, true);
-  }
-}));
 
 app.use(express.static('public'));
 
