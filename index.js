@@ -11,7 +11,7 @@ const Users = Models.User;
 
 mongoose.connect('mongodb+srv://dooby-doo:mynameisthis@go-to-db.llqc0.mongodb.net/myFirstDatabase?retryWrites=true&w=majority', { useNewUrlParser: true, useUnifiedTopology: true });
 
-mongoose.connect('process.env.CONNECTION_URI', { useNewUrlParser: true, useUnifiedTopology: true });
+// mongoose.connect('process.env.CONNECTION_URI', { useNewUrlParser: true, useUnifiedTopology: true });
 
 const app = express();
 
