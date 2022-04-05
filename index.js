@@ -206,7 +206,7 @@ app.delete('/users/:Username', passport.authenticate('jwt', { session: false }),
     });
 });
 
-let allowedOrigins = ['http://localhost:8081', 'https://testsite.com', 'http://localhost:1234'];
+let allowedOrigins = ['http://localhost:8081', 'https://testsite.com', 'http://localhost:1234', 'https://infoaboutmovies123.herokuapp.com/'];
 
 app.use(cors({
   origin: (origin, callback) => {
