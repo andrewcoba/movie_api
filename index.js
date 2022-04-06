@@ -6,8 +6,8 @@ const express = require('express'),
 const mongoose = require('mongoose');
 const Models = require('./models.js');
 
-const Movies = Models.Movies;
-const Users = Models.Users;
+const Movies = Models.Movie;
+const Users = Models.User;
 
 mongoose.connect('mongodb+srv://dooby-doo:mynameisthis@go-to-db.llqc0.mongodb.net/myFirstDatabase?retryWrites=true&w=majority', { useNewUrlParser: true, useUnifiedTopology: true });
 
